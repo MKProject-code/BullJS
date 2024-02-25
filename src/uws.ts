@@ -3,8 +3,6 @@ import {makeBehavior} from 'graphql-ws/lib/use/uWebSockets'
 import {createSchema, createYoga, Repeater} from 'graphql-yoga'
 import {App, HttpRequest, HttpResponse} from 'uWebSockets.js'
 
-import { typeDefs } from './schema/typeDefs.generated'
-import { resolvers } from './schema/resolvers.generated'
 interface ServerContext {
     req: HttpRequest;
     res: HttpResponse;
@@ -44,13 +42,6 @@ export const yoga = createYoga<ServerContext>({
         subscriptionsProtocol: 'WS', // use WebSockets instead of SSE
     },
 })
-
-// const yoga = createYoga({
-//     schema: createSchema({ typeDefs, resolvers }),
-//     graphiql: {
-//         subscriptionsProtocol: 'WS', // use WebSockets instead of SSE
-//     },
-// })
 
 // yoga's envelop may augment the `execute` and `subscribe` operations
 // so we need to make sure we always use the freshest instance

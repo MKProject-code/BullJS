@@ -35,6 +35,7 @@
     ]
   },
   "ignorePatterns": [
-    "tests/*"
+    "src/**/*.test.ts",
+    "src/frontend/generated/*"
   ]
 }

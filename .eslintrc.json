@@ -35,7 +35,7 @@
     ]
   },
   "ignorePatterns": [
-    "src/**/*.test.ts",
-    "src/frontend/generated/*"
+//    "src/**/*.test.ts",
+//    "src/frontend/generated/*"
   ]
 }

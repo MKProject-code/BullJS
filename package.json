@@ -9,12 +9,15 @@
     "minify": "rm -rf ./dist_min && find \"dist\" -type d | xargs -n1 sh -c 'mkdir -p ./dist_min/$1' argv0 && find \"./dist\" -type f -name \"*.js\" | xargs -n1 sh -c 'terser --output dist_min/${1} --compress -- $1' argv0 && rm -rf ./dist && mv ./dist_min/dist ./ && rm -rf ./dist_min",
     "start": "node .",
     "prod": "npm run build && sleep 1 && npm run minify && npm run start",
-    "test": "./node_modules/mocha/bin/mocha.js --require source-map-support/register tests/"
+    "test": "./node_modules/mocha/bin/mocha.js --require source-map-support/register tests/",
+    "generate": "npx graphql-codegen",
+    "graphqxl": "graphqxl ./src/schemax/schema.graphqxl"
   },
   "author": "Mateusz Klencner",
   "license": "GPL-3.0",
   "dependencies": {
     "graphql": "^16.8.1",
+    "graphql-scalars": "^1.22.5",
     "graphql-ws": "^5.15.0",
     "graphql-yoga": "^5.1.1",
     "source-map-support": "^0.5.21",
@@ -24,10 +27,13 @@
     "bufferutil": "^4.0.8"
   },
   "devDependencies": {
+    "@eddeee888/gcg-typescript-resolver-files": "^0.7.2",
+    "@graphql-codegen/cli": "^5.0.2",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
     "eslint": "^8.57.0",
     "mocha": "^10.3.0",
+    "node-graphqxl": "^0.40.1",
     "nodemon": "^3.1.0",
     "terser": "^5.28.1",
     "ts-node": "^10.9.2",

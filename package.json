@@ -1,31 +1,16 @@
 {
   "name": "bulljs",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./dist/index.js",
-  "scripts": {
-    "serve": "./node_modules/nodemon/bin/nodemon.js ./src/index.ts",
-    "build": "rm -rf ./dist && ./node_modules/typescript/bin/tsc",
-    "start": "node .",
-    "test": "./node_modules/mocha/bin/mocha.js --require source-map-support/register tests/"
-  },
-  "author": "Mateusz Klencner",
-  "license": "GPL-3.0",
-  "dependencies": {
-    "express": "^4.18.2",
-    "graphql": "^16.8.1",
-    "graphql-http": "^1.22.0",
-    "ruru": "^2.0.0-beta.11",
-    "source-map-support": "^0.5.21",
-    "ws": "^8.16.0"
-  },
-  "optionalDependencies": {
-    "bufferutil": "^4.0.8"
-  },
+  "module": "index.ts",
+  "type": "module",
   "devDependencies": {
-    "mocha": "^10.3.0",
-    "nodemon": "^3.1.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "graphql": "^16.8.1",
+    "graphql-yoga": "^5.1.1",
+    "uWebSockets.js": "uNetworking/uWebSockets.js#v20.42.0"
   }
 }

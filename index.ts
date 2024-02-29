@@ -1,6 +1,4 @@
-console.log("Hello via Bun!");
-
-import 'source-map-support/register'
+// import 'source-map-support/register'
 import {initApp} from './src/app'
 
 // Ignore the first two elements from process.argv, which contain the path to Node.js and the script name

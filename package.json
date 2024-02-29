@@ -11,7 +11,8 @@
     "prod": "npm run build && sleep 1 && npm run minify && npm run start",
     "test": "./node_modules/mocha/bin/mocha.js --require source-map-support/register tests/",
     "generate": "npx graphql-codegen",
-    "graphqxl": "graphqxl ./src/schemax/schema.graphqxl"
+    "graphqxl": "graphqxl ./src/schemax/schema.graphqxl",
+    "migrate": "npx prisma migrate dev"
   },
   "author": "Mateusz Klencner",
   "license": "GPL-3.0",

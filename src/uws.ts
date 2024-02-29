@@ -3,14 +3,19 @@ import {makeBehavior} from 'graphql-ws/lib/use/uWebSockets'
 import {createSchema, createYoga, Repeater} from 'graphql-yoga'
 import {App, HttpRequest, HttpResponse} from 'uWebSockets.js'
 
-import { typeDefs } from './schema/typeDefs.generated'
-import { resolvers } from './schema/resolvers.generated'
 interface ServerContext {
-    req: HttpRequest;
-    res: HttpResponse;
+    req: HttpRequest
+    res: HttpResponse
 }
 
-export const yoga = createYoga<ServerContext>({
+// const yoga = createYoga<ServerContext>({
+//     schema,
+//     graphiql: {
+//         subscriptionsProtocol: 'WS', // use WebSockets instead of SSE
+//     },
+// })
+
+const yoga = createYoga<ServerContext>({
     schema: createSchema({
         typeDefs: /* GraphQL */ `
             type Query {
@@ -45,25 +50,17 @@ export const yoga = createYoga<ServerContext>({
     },
 })
 
-// const yoga = createYoga({
-//     schema: createSchema({ typeDefs, resolvers }),
-//     graphiql: {
-//         subscriptionsProtocol: 'WS', // use WebSockets instead of SSE
-//     },
-// })
-
-// yoga's envelop may augment the `execute` and `subscribe` operations
-// so we need to make sure we always use the freshest instance
 type EnvelopedExecutionArgs = ExecutionArgs & {
     rootValue: {
-        execute: typeof execute;
-        subscribe: typeof subscribe;
-    };
-};
+        execute: typeof execute
+        subscribe: typeof subscribe
+    }
+}
+
 
 const wsHandler = makeBehavior({
-    execute: args => (args as EnvelopedExecutionArgs).rootValue.execute(args),
-    subscribe: args => (args as EnvelopedExecutionArgs).rootValue.subscribe(args),
+    execute: (args: EnvelopedExecutionArgs) => args.rootValue.execute(args),
+    subscribe: (args: EnvelopedExecutionArgs) => args.rootValue.subscribe(args),
     onSubscribe: async (ctx, msg) => {
         const {schema, execute, subscribe, contextFactory, parse, validate} = yoga.getEnveloped(ctx)
         
@@ -87,4 +84,4 @@ const wsHandler = makeBehavior({
     },
 })
 
-export const app = App().any('/*', yoga).ws(yoga.graphqlEndpoint, wsHandler);
+export const app = App().any('/*', yoga).ws(yoga.graphqlEndpoint, wsHandler)

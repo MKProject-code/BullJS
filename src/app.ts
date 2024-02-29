@@ -1,9 +1,16 @@
+import "reflect-metadata";
+
+
 import {app} from './uws'
+
+import { PrismaClient } from '@prisma/client'
 
 interface IConfig {
     env: string
     port: number
 }
+
+const prisma = new PrismaClient()
 
 export function initApp(config: IConfig) {
     // startWebsocketServer(config.port)

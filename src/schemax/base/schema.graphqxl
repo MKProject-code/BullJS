@@ -1,0 +1,5 @@
+type Base {
+    id: ID!
+    createdAt: String!
+    deletedAt: String!
+}

@@ -1,0 +1,12 @@
+import "base/schema"
+
+type Common {
+    ...Base
+    name: String!
+    description: String!
+}
+
+type Product {
+    ...Base
+    price: Float!
+}

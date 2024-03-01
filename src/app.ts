@@ -1,24 +1,16 @@
-import {app} from './server.ts'
+import {runBun} from './bun.ts'
 
-// import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client';
+
+export const prisma = new PrismaClient();
 
 interface IConfig {
     env: string
     port: number
 }
 
-// const prisma = new PrismaClient()
-
 export function initApp(config: IConfig) {
-    // startWebsocketServer(config.port)
-    
-    app.listen(config.port, (listenSocket) => {
-        if(listenSocket !== false) {
-            console.log(`Server is running on http://localhost:${config.port}`)
-        } else {
-            console.log('Error: Server running problem.')
-        }
-    })
+    const server = runBun(config.port)
 }
 
 //

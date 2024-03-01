@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator kysely {
+  provider = "prisma-kysely"
+
+  // Optionally provide a destination directory for the generated file
+  // and a filename of your choice
+  output       = "../src/db"
+  fileName     = "types.ts"
+  // Optionally generate runtime enums to a separate file
+  enumFileName = "enums.ts"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// dbgenerated("(uuid())")
+model user {
+  id            String    @id @default(cuid())
+  created_by_id BigInt?   @db.UnsignedBigInt
+  updated_by_id BigInt?   @db.UnsignedBigInt
+  deleted_by_id BigInt?   @db.UnsignedBigInt
+  created_at    DateTime? @db.DateTime(0)
+  updated_at    DateTime? @db.DateTime(0)
+  deleted_at    DateTime? @db.DateTime(0)
+  firstName     String?   @db.VarChar(255)
+  lastName      String?   @db.VarChar(255)
+  role          Role?
+}
+
+enum Role {
+  owner
+  member
+}

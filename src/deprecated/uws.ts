@@ -1,7 +1,7 @@
-import { execute, type ExecutionArgs, subscribe } from 'graphql'
-import { makeBehavior } from 'graphql-ws/lib/use/uWebSockets'
-import { createSchema, createYoga, Repeater } from 'graphql-yoga'
-import { App, type HttpRequest, type HttpResponse } from 'uWebSockets.js'
+import {execute, type ExecutionArgs, subscribe} from 'graphql'
+import {makeBehavior} from 'graphql-ws/lib/use/uWebSockets'
+import {createSchema, createYoga, Repeater} from 'graphql-yoga'
+import {App, type HttpRequest, type HttpResponse} from 'uWebSockets.js'
 
 interface ServerContext {
     req: HttpRequest
@@ -21,7 +21,7 @@ const yoga = createYoga<ServerContext>({
         `,
         resolvers: {
             Query: {
-                hello: () => 'Hello world!'
+                hello: () => 'Hello world!',
             },
             Subscription: {
                 time: {
@@ -29,18 +29,18 @@ const yoga = createYoga<ServerContext>({
                      new Repeater((push, stop) => {
                          const interval = setInterval(() => {
                              push({
-                                 time: new Date().toISOString()
+                                 time: new Date().toISOString(),
                              })
                          }, 1000)
                          stop.then(() => clearInterval(interval))
-                     })
-                }
-            }
-        }
+                     }),
+                },
+            },
+        },
     }),
     graphiql: {
-        subscriptionsProtocol: 'WS' // use WebSockets instead of SSE
-    }
+        subscriptionsProtocol: 'WS', // use WebSockets instead of SSE
+    },
 })
 
 // yoga's envelop may augment the `execute` and `subscribe` operations
@@ -56,7 +56,7 @@ const wsHandler = makeBehavior({
     execute: args => (args as EnvelopedExecutionArgs).rootValue.execute(args),
     subscribe: args => (args as EnvelopedExecutionArgs).rootValue.subscribe(args),
     onSubscribe: async (ctx, msg) => {
-        const { schema, execute, subscribe, contextFactory, parse, validate } = yoga.getEnveloped(ctx)
+        const {schema, execute, subscribe, contextFactory, parse, validate} = yoga.getEnveloped(ctx)
         
         const args: EnvelopedExecutionArgs = {
             schema,
@@ -66,16 +66,27 @@ const wsHandler = makeBehavior({
             contextValue: await contextFactory(),
             rootValue: {
                 execute,
-                subscribe
-            }
+                subscribe,
+            },
         }
         
         const errors = validate(args.schema, args.document)
-        if (errors.length) return errors
+        if (errors.length) {
+            return errors
+        }
         return args
-    }
+    },
 })
 
-export const app = App()
-.any('/*', yoga)
-.ws(yoga.graphqlEndpoint, wsHandler)
+export function runUWS(port: number) {
+    return App()
+    .any('/*', yoga)
+    .ws(yoga.graphqlEndpoint, wsHandler)
+    .listen(port, (listenSocket) => {
+        if (listenSocket !== false) {
+            console.log(`Server is running on http://localhost:${port}`)
+        } else {
+            console.log('Error: Server running problem.')
+        }
+    })
+}

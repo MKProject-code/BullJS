@@ -8,7 +8,7 @@ type Book {
 ####################################
 extend type Query {
     book(id: ID!): Book
-    books: [Book]
+    books: [Book!]
 }
 
 ####################################

@@ -7,7 +7,9 @@
     "hot": "bun --hot ."
   },
   "devDependencies": {
+    "@types/bcryptjs": "2.4.6",
     "@types/bun": "latest",
+    "@types/jsonwebtoken": "9.0.6",
     "kysely": "^0.27.2"
   },
   "peerDependencies": {
@@ -15,15 +17,19 @@
   },
   "dependencies": {
     "@escape.tech/graphql-armor": "^2.4.0",
+    "@graphql-tools/load-files": "^7.0.0",
     "@graphql-yoga/plugin-jwt": "^2.1.2",
     "@graphql-yoga/plugin-sofa": "^3.1.1",
     "@prisma/client": "^5.10.2",
+    "bcryptjs": "2.4.3",
     "graphql": "^16.8.1",
     "graphql-ws": "^5.15.0",
     "graphql-yoga": "^5.1.1",
     "http-status-codes": "^2.3.0",
+    "jsonwebtoken": "9.0.2",
     "prisma": "^5.10.2",
     "prisma-kysely": "^1.8.0",
+    "prisma-merge": "^0.2.0",
     "uWebSockets.js": "uNetworking/uWebSockets.js#v20.42.0"
   }
 }

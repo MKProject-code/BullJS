@@ -1,6 +1,7 @@
 import {EnvelopArmor} from '@escape.tech/graphql-armor'
 import {createYoga} from 'graphql-yoga'
-import {useAuth} from './plugins/auth.ts'
+import {createContext} from './context.ts'
+import {useAuth} from '../plugins/auth.ts'
 import {schema} from './schema.ts'
 import { createFetch } from '@whatwg-node/fetch'
 
@@ -8,6 +9,7 @@ const armor = new EnvelopArmor();
 const protection = armor.protect()
 
 const signingKey: string = process.env.JWT_SECRET!
+
 const yoga = createYoga({
     schema: schema,
     multipart: false, // Upload multiple files
@@ -29,6 +31,7 @@ const yoga = createYoga({
     landingPage: false, // Home page
     graphiql: true, // Web interface
     maskedErrors: false,
+    context: createContext,
     plugins: [
      
      //FOR PRODUCTION
@@ -54,7 +57,7 @@ const yoga = createYoga({
         // title: 'Example API',
         // version: '1.0.0'
         // })
-        ...protection.plugins
+        // ...protection.plugins
     ],
 })
 

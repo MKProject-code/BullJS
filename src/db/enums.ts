@@ -1,5 +1,5 @@
 export const Role = {
-    owner: "owner",
-    member: "member"
+    OWNER: "OWNER",
+    MEMBER: "MEMBER"
 } as const;
 export type Role = (typeof Role)[keyof typeof Role];

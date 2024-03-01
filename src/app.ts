@@ -1,8 +1,4 @@
-import {runBun} from './bun.ts'
-
-import { PrismaClient } from '@prisma/client';
-
-export const prisma = new PrismaClient();
+import {runBun} from './server/bun.ts'
 
 interface IConfig {
     env: string
@@ -13,4 +9,3 @@ export function initApp(config: IConfig) {
     const server = runBun(config.port)
 }
 
-//

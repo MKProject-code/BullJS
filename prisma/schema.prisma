@@ -19,20 +19,23 @@ datasource db {
 }
 
 // dbgenerated("(uuid())")
-model user {
-  id            String    @id @default(cuid())
-  created_by_id BigInt?   @db.UnsignedBigInt
-  updated_by_id BigInt?   @db.UnsignedBigInt
-  deleted_by_id BigInt?   @db.UnsignedBigInt
-  created_at    DateTime? @db.DateTime(0)
-  updated_at    DateTime? @db.DateTime(0)
-  deleted_at    DateTime? @db.DateTime(0)
-  firstName     String?   @db.VarChar(255)
-  lastName      String?   @db.VarChar(255)
-  role          Role?
+model User {
+  id       String  @id @default(cuid())
+  name     String? @db.VarChar(255)
+  email    String? @db.VarChar(255)
+  password String? @db.VarChar(255)
+  role     Role?
+  books    Book[]
 }
 
 enum Role {
-  owner
-  member
+  OWNER
+  MEMBER
+}
+
+model Book {
+  id       String @id @default(cuid())
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String
+  title    String @db.VarChar(255)
 }

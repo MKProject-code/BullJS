@@ -1,0 +1,30 @@
+enum UserRole {
+    OWNER
+    MEMBER
+}
+
+####################################
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    role: UserRole
+    books: [Book]
+}
+
+####################################
+extend type Query {
+    user(id: ID!): User
+    users: [User]
+}
+
+####################################
+extend type Mutation {
+    createUser(data: UserInput): User
+}
+
+input UserInput {
+    name: String
+    email: String
+    password: String
+}

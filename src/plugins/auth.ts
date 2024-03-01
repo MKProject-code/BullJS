@@ -4,10 +4,10 @@ import {jsonErrorUnauthorized} from '../utils/json.ts'
 
 export function useAuth(): Plugin {
     return {
-        onRequest({request, fetchAPI, endResponse}) {
-            if (!request.headers.get('authorization')) {
-                endResponse(jsonErrorUnauthorized.getResponse(fetchAPI))
-            }
+        async onRequest({request, fetchAPI, endResponse}) {
+            // if (!request.headers.get('authorization')) {
+            //     endResponse(jsonErrorUnauthorized.getResponse(fetchAPI))
+            // }
         },
     }
 }
